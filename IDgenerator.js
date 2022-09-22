@@ -1,6 +1,6 @@
-import { addUserToDB } from "./addUserToDB.js";
+import { addProductToDB } from "./addProductToDB.js";
 
-const MAX_IDS = 10;
+const MAX_IDS = 1000000000;
 
 const newID = () => {
   // generates random number between 1 to MAX_IDS
@@ -14,7 +14,7 @@ export function createNewUser(user, users){
   const index = users.findIndex((event) => event.id === id);
   try{
     if(index === -1){
-      return addUserToDB(user, users, id);
+      return addProductToDB(user, users, id);
       }
     if(index !== -1 && MAX_IDS > users.length){
       return createNewUser(user, users);

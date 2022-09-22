@@ -1,0 +1,9 @@
+{
+  "id": 1,
+  "productName": "Product Name",
+  "productPrice": "Product Price",
+  "ProductDesc": "Product Description",
+  "productAlt": "Image discription",
+  "productType": "choose between ilustracoes,albums and camisetas",
+  "productImage": "Image converted in base64"
+}
