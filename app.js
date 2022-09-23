@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 // routes
-import { router as usersRoutes } from './routes/users.js';
+import { router as usersRoutes } from './src/routes/users.js';
 
 const app = express();
 const PORT = 4242;

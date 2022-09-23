@@ -1,4 +1,4 @@
-import { createNewUser } from '../IDgenerator.js'
+import { createNewUser } from '../helpers/IDgenerator.js'
 
 let users = [];
 
