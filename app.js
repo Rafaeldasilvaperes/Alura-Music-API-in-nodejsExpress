@@ -2,16 +2,19 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 // routes
-import { router as usersRoutes } from './src/routes/users.js';
+import { router as productsRoutes } from './src/routes/products.js';
 
 const app = express();
-const PORT = 4242;
+const PORT = process.env.PORT || 4242;
+
+// db connection string
+// mongodb+srv://rafaelPeres:<password>@amcluster.kpqq81v.mongodb.net/?retryWrites=true&w=majority
 
 // Middleware
 app.use(bodyParser.json()); 
 // Endpoint
-app.use('/users', usersRoutes)
+app.use('/products', productsRoutes)
 // Port being served
 app.listen(PORT, () => console.log(`Server running on port: http://localhost:${PORT}`));
 
-app.get('/', (req, res) => res.send('Hello from the Home Page!'));
+app.get('/', (req, res) => res.send('Hello from the Alura Music Home Page ♫'));

@@ -8,21 +8,20 @@ const newID = () => {
   return newId
 }
 
-export function createNewUser(user, users){
+export function createNewProduct(product, products){
   const id = newID();
-  // checks if new generated number is equal to any id inside each object from the "users" array
-  const index = users.findIndex((event) => event.id === id);
+  // checks if new generated number is equal to any id inside each object from the "products" array
+  const index = products.findIndex((event) => event.id === id);
   try{
     if(index === -1){
-      return addProductToDB(user, users, id);
+      return addProductToDB(product, products, id);
       }
-    if(index !== -1 && MAX_IDS > users.length){
-      return createNewUser(user, users);
+    if(index !== -1 && MAX_IDS > products.length){
+      return createNewProduct(product, products);
     }
-    if(users.length >= MAX_IDS) throw "User's limit, reached!"
+    if(products.length >= MAX_IDS) throw "product's limit, reached!"
   }catch(err){
       console.log(err)
       return
     }
-
 }
