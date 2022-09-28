@@ -1,5 +1,7 @@
 import { createNewProduct } from '../helpers/IDgenerator.js'
 
+import { Product as ProductModel} from '../models/Product.js'
+
 let products = [{
   "id": 1,
   "productName": "Product Name",
