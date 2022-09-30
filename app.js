@@ -27,4 +27,4 @@ mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PW}@amcluster.kpqq81v.mongodb.ne
 .catch((err) => console.log(err))
 
 // Home Page
-app.get('/', (req, res) => res.send('Hello from the Alura Music Home Page ♫'));
+app.get('/', (req, res) => res.send('Hello from the Alura Music Home Page API ♫'));
