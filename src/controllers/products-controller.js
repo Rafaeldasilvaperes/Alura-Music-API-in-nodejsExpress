@@ -1,58 +1,89 @@
-import { createNewProduct } from '../helpers/IDgenerator.js'
-
 import { Product as ProductModel} from '../models/Product.js'
+import { checkingForErrors } from '../helpers/checkingForErrors.js'
 
-let products = [{
-  "id": 1,
-  "productName": "Product Name",
-  "productPrice": "Product Price",
-  "ProductDesc": "Product Description",
-  "productAlt": "Image discription",
-  "productType": "choose between ilustracoes,albums and camisetas",
-  "productImage": "Image converted in base64"
-}];
 
-// get
-export const getAllProducts = (req, res) =>{
-  res.send(products);
+// GET
+export const getAllProducts = async (req, res) =>{
+  try {
+    const products = await ProductModel.find();
+    res.status(200).send(products)
+    return
+    
+  } catch (error) {
+    res.status(500).send({ error: error })
+    return
+  }
 }
 
-// post
-export const createProduct = (req, res) => {
+// POST
+export const createProduct = async (req, res) => {
   const product = req.body;
-  createNewProduct(product, products);
-  res.send(`Product "${product.productName}" added to the database!`);
+  const productReady = {
+    ...product
+  }
+
+  if(checkingForErrors(product)){ 
+    return res.status(422).send(checkingForErrors(product))
+  }
+
+  try {
+    await ProductModel.create(productReady);
+
+    res.status(201).send({ message: `Product - ${product.productName} - added to the Database!`})
+    return
+    
+  } catch (error) {
+    res.status(500).send({ error: error})
+    return
+  }
 }
 
-// get/:id
-export const getSingleProduct = (req, res) => {
+// GET/:id
+export const getSingleProduct = async (req, res) => {
   const { id } = req.params;
-  const foundProduct = products.find((product) => product.id == id);
-  console.log(foundProduct);
-  res.send(foundProduct);
+
+  try {
+    const foundProduct = await ProductModel.findOne({_id: id})
+    return res.status(200).send(foundProduct)
+
+  } catch (error) {
+    res.status(422).send({message: `Product with ID:${id} not found!`})
+    return
+  }
 }
 
-// delete/:id
-export const deleteProduct = (req, res) => {
+// DELETE/:id
+export const deleteProduct = async (req, res) => {
   const { id } = req.params;
-  products = products.filter((product) => product.id != id);
-  res.send(`Product with the id "${id}" deleted from database!`);
+
+  try {
+    await ProductModel.findOne({_id: id})
+    await ProductModel.deleteOne({_id: id})
+    return res.status(200).send({message: `Product with ID: ${id} deleted from Database!`})
+
+  } catch (error) {
+    res.status(500).send({error : error})
+    return
+  }
+
 }
 
-// patch/:id
-export const editProduct = (req, res) => {
+// PATCH/:id
+export const editProduct = async (req, res) => {
   const { id } = req.params;
-  const { productName, productPrice, ProductDesc, productAlt, productType, productImage } = req.body;
-  const productForEdit = products.find((user) => user.id == id);
+  const product = req.body;
+  
+  const productReady = {
+    ...product
+  }
 
-  if(productName) productForEdit.productName = productName;
-  if(productPrice) productForEdit.productPrice = productPrice;
-  if(ProductDesc) productForEdit.ProductDesc = ProductDesc;
-
-  if(productAlt) productForEdit.productAlt = productAlt;
-  if(productType) productForEdit.productType = productType;
-  if(productImage) productForEdit.productImage = productImage;
-
-  res.send(`Product with the id ${id} has been updated!`);
-
+  try {
+    await ProductModel.updateOne({_id: id}, productReady);
+    res.status(200).send(productReady)
+    return
+    
+  } catch (error) {
+    res.status(422).send({message: `Product with ID:${id} not found!`})
+    return
+  }
 }

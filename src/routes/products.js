@@ -11,9 +11,9 @@ export const router = express.Router();
 router.get('/', getAllProducts);
 // POST
 router.post('/', createProduct);
-// GET SINGLE USER
+// GET SINGLE PRODUCT
 router.get('/:id', getSingleProduct);
-// DELETE SINGLE USER
+// DELETE SINGLE PRODUCT
 router.delete('/:id', deleteProduct);
 // PATCH
 router.patch('/:id', editProduct)
