@@ -2,6 +2,10 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+// import { validateApiKey } from './src/helpers/keyValidator.js'
+
+// import cors from 'cors';
+
 // routes
 import { router as productsRoutes } from './src/routes/products.js';
 
@@ -12,9 +16,13 @@ const PORT = process.env.PORT || 4242;
 dotenv.config();
 
 // Middleware
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());
+// app.use(validateApiKey);
+// Cors allowance
+// app.use(cors());
 // Endpoint
-app.use('/products', productsRoutes)
+
+app.use('/products', productsRoutes);
 // Mongoose connection
 const DB_USER = process.env.DB_USER;
 const DB_PW = process.env.DB_PW;
