@@ -13,16 +13,17 @@ const PORT = process.env.PORT || 4242;
 dotenv.config();
 
 // Middlewares
+  // json 
 app.use(bodyParser.json());
+  // cors
 app.use((req, res, next) =>{
-  console.log("Acessou MIDDLEWARE")
   res.header("Access-Control-Allow-Origin","*")
   res.header("Access-Control-Allow-Methods", 'GET,PATCH,POST,DELETE')
   app.use(cors());
   next()
 })
-// Endpoint
 
+// Endpoint
 app.use('/products', productsRoutes);
 // Mongoose connection
 const DB_USER = process.env.DB_USER;
@@ -35,7 +36,6 @@ mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PW}@amcluster.kpqq81v.mongodb.ne
   app.listen(PORT, () => console.log(`Server running on port: http://localhost:${PORT}`));
 })
 .catch((err) => console.log(err))
-
 
 // Home Page
 app.get('/', (req, res) => res.sendFile('index.html', {root: './'}));
