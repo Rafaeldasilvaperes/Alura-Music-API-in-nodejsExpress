@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-
+import cors from 'cors';
 // routes
 import { router as productsRoutes } from './src/routes/products.js';
 
@@ -12,9 +12,15 @@ const PORT = process.env.PORT || 4242;
 // enviroment variables
 dotenv.config();
 
-// Middleware
+// Middlewares
 app.use(bodyParser.json());
-
+app.use((req, res, next) =>{
+  console.log("Acessou MIDDLEWARE")
+  res.header("Access-Control-Allow-Origin","*")
+  res.header("Access-Control-Allow-Methods", 'GET,PATCH,POST,DELETE')
+  app.use(cors());
+  next()
+})
 // Endpoint
 
 app.use('/products', productsRoutes);
