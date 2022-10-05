@@ -16,12 +16,8 @@ dotenv.config();
   // json 
 app.use(bodyParser.json());
   // cors
-app.use((req, res, next) =>{
-  res.header("Access-Control-Allow-Origin","*")
-  res.header("Access-Control-Allow-Methods", "GET,PATCH,POST,DELETE")
-  app.use(cors());
-  next()
-})
+app.use(cors());
+  
 
 // Endpoint
 app.use('/products', productsRoutes);
