@@ -4,7 +4,7 @@ import { validateApiKey } from '../helpers/keyValidator.js'
 
 // GET
 export const getAllProducts =  async (req, res) =>{
-  
+ 
   if(validateApiKey(req)){
     try {
       const products = await ProductModel.find();
@@ -23,9 +23,12 @@ export const getAllProducts =  async (req, res) =>{
 // POST
 export const createProduct = async (req, res) => {
   const product = req.body;
+  
   const productReady = {
     ...product
   }
+
+  
 
   if(checkingForErrors(product)){ 
     return res.status(422).send(checkingForErrors(product))
@@ -83,8 +86,6 @@ export const deleteProduct = async (req, res) => {
   }else{
     return res.status(401).send({message: "You are not allowed"});
   }
-  
-
 }
 
 // PATCH/:id
