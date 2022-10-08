@@ -2,6 +2,7 @@ import { Product as ProductModel} from '../models/Product.js'
 import { checkingForErrors } from '../helpers/checkingForErrors.js'
 import { validateApiKey } from '../helpers/keyValidator.js'
 
+
 // GET
 export const getAllProducts =  async (req, res) =>{
  
@@ -23,12 +24,11 @@ export const getAllProducts =  async (req, res) =>{
 // POST
 export const createProduct = async (req, res) => {
   const product = req.body;
-  
+  const file = req.file;
+  console.log(file)
   const productReady = {
     ...product
   }
-
-  
 
   if(checkingForErrors(product)){ 
     return res.status(422).send(checkingForErrors(product))

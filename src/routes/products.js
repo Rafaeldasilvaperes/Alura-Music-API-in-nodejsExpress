@@ -1,21 +1,15 @@
 import express from 'express';
 // routes imports
 import { createProduct, getAllProducts, getSingleProduct, deleteProduct, editProduct } from '../controllers/products-controller.js';
+// parse image
+import { upload } from '../middlewares/multer.js'
 
 export const router = express.Router();
-
-// all routes in here are starting with /products
-// import dotenv from 'dotenv';
-// dotenv.config();
-
-// const API_KEY = process.env.API_KEY;
-// ?api_key=${API_KEY}
-// validateApiKey(),
 
 // GET
 router.get('/', getAllProducts);
 // POST
-router.post('/', createProduct);
+router.post('/', upload.single('images') ,createProduct);
 // GET SINGLE PRODUCT
 router.get('/:id', getSingleProduct);
 // DELETE SINGLE PRODUCT
