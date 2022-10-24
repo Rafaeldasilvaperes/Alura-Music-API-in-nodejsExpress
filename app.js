@@ -17,17 +17,15 @@ const PORT = process.env.PORT || 4242;
 app.use(bodyParser.json());
   // cors
 app.use(cors());
-  
 // Endpoints
 app.use('/products', productsRoutes);
-
 // Mongoose connection
 mongoDBConn().then(() => {
-  console.log('Mongoose is connected!')
-  // PORT being served
+  console.log('Mongoose is connected!');
+  // PORT being served if Mongoose gets to be connected
   app.listen(PORT, () => console.log(`Server running on port: http://localhost:${PORT}`));
 })
-.catch((err) => console.log(err))
+.catch((err) => console.log(err));
 
 // Home Page
 app.get('/', (req, res) => res.sendFile('index.html', {root: './'}));
