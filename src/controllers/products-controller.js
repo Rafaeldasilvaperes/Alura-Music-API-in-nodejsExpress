@@ -1,4 +1,4 @@
-import { Product as ProductModel} from '../models/Product.js'
+import ProductModel from '../models/Product.js'
 import { checkingForErrors } from '../helpers/checkingForErrors.js'
 
 
