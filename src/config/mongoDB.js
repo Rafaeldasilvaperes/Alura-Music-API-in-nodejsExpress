@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-
 const DB_USER = process.env.DB_USER;
 const DB_PW = process.env.DB_PW;
 
@@ -17,5 +16,4 @@ export const mongoDBConn = async () =>{
   } catch (error) {
    console.error("Connection failled!");
   }
-
 }

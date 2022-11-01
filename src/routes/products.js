@@ -1,6 +1,6 @@
 import express from 'express';
 // routes imports
-import { createProduct, getAllProducts, getSingleProduct, deleteProduct, editProduct } from '../controllers/products-controller.js';
+import { createProduct, getAllProducts, getSingleProduct, deleteProduct, editProduct } from '../controllers/productsController.js';
 // middleware for api_key validation
 import { validateApiKey } from '../middlewares/keyValidator.js'
 

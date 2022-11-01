@@ -1,12 +1,17 @@
 import ProductModel from '../models/Product.js'
-import { checkingForErrors } from '../helpers/checkingForErrors.js'
 
+import { checkingForErrors } from '../helpers/checkingForErrors.js'
+// Data Access Object for DB queries
+import {QueryDB} from '../DAO/productDAO.js'
+
+const DATABASE = QueryDB.Mongo
 
 // GET
 export const getAllProducts = async (req, res) =>{
-
+  
   try {
-    const products = await ProductModel.find();
+    
+    const products = await DATABASE.getAllProducts()
     res.status(200).send(products);
     return;
   } catch (error) {
@@ -18,8 +23,6 @@ export const getAllProducts = async (req, res) =>{
 // POST
 export const createProduct = async (req, res) => {
   const product = req.body;
-  const file = req.file;
-  console.log(file);
   const productReady = {
     ...product
   }
@@ -29,9 +32,13 @@ export const createProduct = async (req, res) => {
   }
 
   try {
-    await ProductModel.create(productReady);
-
-    res.status(201).send({ message: `Product - ${product.productName} - added to the Database!`});
+    await DATABASE.postOneProduct(productReady);
+    res.status(201).send({ 
+      message: { 
+        product: `${productReady.productName}`,
+        status: "Added to the Database!"
+      }
+    });
     return;
     
   } catch (error) {
@@ -45,7 +52,7 @@ export const getSingleProduct = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const foundProduct = await ProductModel.findOne({_id: id});
+    const foundProduct = await DATABASE.getOneProduct(id)
     return res.status(200).send(foundProduct);
 
   } catch (error) {
@@ -59,15 +66,20 @@ export const deleteProduct = async (req, res) => {
   const { id } = req.params;
 
   try {
-    await ProductModel.findOne({_id: id});
-    await ProductModel.deleteOne({_id: id});
-    return res.status(200).send({message: `Product with ID: ${id} deleted from Database!`});
+    await DATABASE.deleteOneProduct(id);
+    return res.status(200).send({ 
+      message: { 
+        product: `Product with id: ${id}`,
+        status: "DELETED"
+      }
+    });
 
   } catch (error) {
     res.status(500).send({error : error});
     return;
   }
 }
+
 
 // PATCH/:id
 export const editProduct = async (req, res) => {
