@@ -1,22 +1,18 @@
-import ProductModel from '../models/Product.js'
-
+// Helper for checking errors on POST request
 import { checkingForErrors } from '../helpers/checkingForErrors.js'
-// Data Access Object for DB queries
+// Data Access Object for DB queries, obs.: without an interface
 import {QueryDB} from '../DAO/productDAO.js'
 
 const DATABASE = QueryDB.Mongo
 
 // GET
 export const getAllProducts = async (req, res) =>{
-  
-  try {
-    
-    const products = await DATABASE.getAllProducts()
-    res.status(200).send(products);
-    return;
-  } catch (error) {
-    res.status(500).send({ error: error });
-    return;
+  const Products = await DATABASE.getAllProducts();
+
+  if(Products.status === true){
+    return res.status(200).send(Products.products);
+  }else{
+    return res.status(404).send({ error: Products.error });
   }
 }
 
@@ -31,19 +27,19 @@ export const createProduct = async (req, res) => {
     return res.status(422).send(checkingForErrors(product));
   }
 
-  try {
-    await DATABASE.postOneProduct(productReady);
-    res.status(201).send({ 
-      message: { 
-        product: `${productReady.productName}`,
-        status: "Added to the Database!"
-      }
+  const ProductToBePosted = await DATABASE.postOneProduct(productReady);
+
+  if(ProductToBePosted.status === true){
+    return res.status(200).send({ 
+          message: { 
+            product: `${ProductToBePosted.product.productName}`,
+            status: "Added to the Database!"
+          }
+        });
+  }else{
+    return res.status(500).send({ 
+      error: ProductToBePosted.error 
     });
-    return;
-    
-  } catch (error) {
-    res.status(500).send({ error: error});
-    return;
   }
 }
 
@@ -51,13 +47,12 @@ export const createProduct = async (req, res) => {
 export const getSingleProduct = async (req, res) => {
   const { id } = req.params;
 
-  try {
-    const foundProduct = await DATABASE.getOneProduct(id)
-    return res.status(200).send(foundProduct);
+  const foundProduct = await DATABASE.getOneProduct(id);
 
-  } catch (error) {
-    res.status(422).send({message: `Product with ID:${id} not found!`});
-    return;
+  if(foundProduct.status === true){
+    return res.status(200).send(foundProduct.product);
+  }else{
+    return res.status(404).send({ error: foundProduct.error });
   }
 }
 
@@ -65,38 +60,35 @@ export const getSingleProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
   const { id } = req.params;
 
-  try {
-    await DATABASE.deleteOneProduct(id);
+  const productToBeDeleted = await DATABASE.deleteOneProduct(id);
+  if(productToBeDeleted.status === true){
     return res.status(200).send({ 
-      message: { 
-        product: `Product with id: ${id}`,
-        status: "DELETED"
-      }
-    });
-
-  } catch (error) {
-    res.status(500).send({error : error});
-    return;
+          message: { 
+            product: `Product with name: ${productToBeDeleted.product.productName}`,
+            status: "DELETED"
+          }
+        });
+  }else{
+    return res.status(404).send({error : productToBeDeleted.error});
   }
 }
-
 
 // PATCH/:id
 export const editProduct = async (req, res) => {
   const { id } = req.params;
   const product = req.body;
   
-  const productReady = {
+  const productEdited = {
     ...product
   }
 
-  try {
-    await ProductModel.updateOne({_id: id}, productReady);
-    res.status(200).send(productReady);
-    return;
-    
-  } catch (error) {
-    res.status(422).send({message: `Product with ID:${id} not found!`});
-    return;
+  const productToBeEdited = await DATABASE.editOneProcut(id, productEdited)
+  if(productToBeEdited.status === true){
+    res.status(200).send({
+      status: `Product id: ${id} edited successfully!`,
+      message: productToBeEdited.product
+    });
+  }else{
+    return res.status(404).send({error : productToBeEdited.error});
   }
 }
