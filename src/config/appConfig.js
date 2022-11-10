@@ -9,21 +9,22 @@ import timeout from 'connect-timeout'
 // routes
 import { router as productsRoutes } from '../routes/products.js';
 // Mongo DB connection
-import { mongoDBConn } from '../config/mongoDB.js'
+import { mongoDBConn } from './mongoDB.js'
+// Swagger for documentation
+import swaggerUi from 'swagger-ui-express';
 
 const app = express();
-
 // Mongoose connection
 mongoDBConn();
 
 // middleware to give a limit time of waiting for a request to be answered
 app.use(timeout('30s'));
 // Middlewares
-  // json 
+// json 
 bodyParserConfig(app);
-  // cors
+// cors
 corsConfig(app);
 // Endpoints
 app.use('/products', productsRoutes);
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup())
 export default app;
