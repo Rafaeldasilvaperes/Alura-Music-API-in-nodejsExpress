@@ -5,11 +5,11 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "node --experimental-json-modules app.js",
+    "dev": "nodemon --experimental-json-modules app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Rafael da Silva Peres",
   "license": "ISC",
   "dependencies": {
     "connect-timeout": "^1.9.0",

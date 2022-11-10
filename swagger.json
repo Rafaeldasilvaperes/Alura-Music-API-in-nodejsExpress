@@ -1,0 +1,19 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+   "title": "API for Alura Music",
+   "description": "This API can be used to manage products and users for a simple eCommerce website.",
+   "termsOfService": "",
+   "contact": {
+    "name": "Rafael da Silva Peres",
+    "email": "rafaeldasilvaperes@hotmail.com"
+   },
+   "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": ""
+    }
+  ]
+
+}
