@@ -6,6 +6,7 @@ import { QueryDB } from '../DAO/productDAO.js'
 const DATABASE = QueryDB.Mongo
 
 const productService = {
+  // GET ALL
   async getAllProducts() {
     try {
       const products = await DATABASE.getAllProducts();
@@ -22,6 +23,7 @@ const productService = {
       });
     }
   },
+  // GET ONE
   async getOneProduct(productId) {
     try {
       const foundProduct = await DATABASE.getOneProduct({ _id: productId });
@@ -42,6 +44,7 @@ const productService = {
       })
     }
   },
+  // POST
   async postOneProduct(product) {
     const productReady = {
       ...product
@@ -76,6 +79,7 @@ const productService = {
       });
     }
   },
+  // DELETE ONE
   async deleteOneProduct(productId) {
 
     try {
@@ -102,6 +106,7 @@ const productService = {
       })
     }
   },
+  // UPDATE ONE
   async editOneProduct(id, product) {
     const productBody = {
       ...product

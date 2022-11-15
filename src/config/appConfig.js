@@ -11,9 +11,9 @@ import { router as productsRoutes } from '../routes/products.js';
 // Mongo DB connection
 import { mongoDBConn } from './mongoDB.js'
 // Swagger for documentation
-// import swaggerUi from 'swagger-ui-express';
+import swaggerUi from 'swagger-ui-express';
 // documentation
-// import swaggerDocs from '../../swagger.json'
+import swaggerDocs from '../../swagger.json'
 
 
 const app = express();
@@ -28,6 +28,7 @@ bodyParserConfig(app);
 // cors
 corsConfig(app);
 // Endpoints
+app.use('/v1/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use('/v1/products', productsRoutes);
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
-export default app;
+
+export default app; 

@@ -7,7 +7,7 @@ dotenv.config();
 // set a env. for your PORT. It will use 4242 as default
 const PORT = process.env.PORT || 4242;
 // Serving the app
-app.listen(PORT, () => console.log(`Server running on port: http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port: http://localhost:${PORT}/v1`));
 // Home Page
-app.get('/', (req, res) => res.sendFile('index.html', { root: './' }));
+app.get('/v1', (req, res) => res.sendFile('index.html', { root: './' }));
 

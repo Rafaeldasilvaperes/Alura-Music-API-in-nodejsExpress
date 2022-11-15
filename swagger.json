@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
    "title": "API for Alura Music",
-   "description": "This API can be used to manage products and users for a simple eCommerce website.",
+   "description": "This API can be used to manage products for a simple eCommerce website.",
    "termsOfService": "",
    "contact": {
     "name": "Rafael da Silva Peres",
@@ -12,8 +12,192 @@
   },
   "servers": [
     {
-      "url": ""
+      "url": "https://concerned-foal-outerwear.cyclic.app/v1",
+      "description": "Production API"
     }
-  ]
+  ],
+  "paths": {
+    "/products": {
+      "post": {
+        "summary": "Upload a new product",
+        "description": "This endpoint will be responsible to upload a single new product.",
+        "tags": ["Products"],
+        "security": [{ "ApiKeyAuth": ["/"] }],
+        "requestBody": {
+          "content": {
+            "application/json":{
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              },
+              "examples": {
+                "Product": {
+                  "value": {
+                    "productName": "Dark Side of the Moon - Pink Floyd",
+                    "productPrice": 299.98,
+                    "productDesc": "The best album to listen while taking your coffee!",
+                    "productAlt": "Album cover, a prism with refracted light on a black background",
+                    "productType": "albums",
+                    "productImage": "data:image/png;base64,<a long alphanumeric string representing your image>"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "You are not allowed without an API key"
+          },
+          "404": {
+            "description": "It was not possible to add the product"
+          },
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Product"
+                }
+            }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Get all products from database",
+        "summary": "Get all products from database",
+        "tags": ["Products"],
+        "security": [{ "ApiKeyAuth": ["/"] }],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Products not found, try again later"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "description": "Get one product by id",
+        "summary": "Get one product by id",
+        "tags": ["Products"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Product by id",
+            "required": true
+          }
+        ],
+        "security": [{ "ApiKeyAuth": ["/"] }],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not found"
+          }
+        }
+      },
+      "patch": {
+        "description": "Update one product by id",
+        "summary": "Update one product by id",
+        "tags": ["Products"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Product by id",
+            "required": true
+          }
+        ],
+        "security": [{ "ApiKeyAuth": ["/"] }],
+        "requestBody": {
+          "content": {
+            "application/json":{
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              },
+              "examples": {
+                "Product": {
+                  "value": {
+                    "productName": "Greatest Hits - Led Zeppelin",
+                    "productPrice": 189.90,
+                    "productDesc": "The second best album to listen while taking your coffee!",
+                    "productAlt": "A stairway going all the up to the sky",
+                    "productType": "albums",
+                    "productImage": "data:image/png;base64,<a long alphanumeric string representing your image>"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "You are not allowed without an API key"
+          },
+          "404": {
+            "description": "Product not found"
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Product"
+                }
+            }
+            }
+          }
+        }
+      }
+    }
+  },
+  
+  "components": {
+    "schemas": {
+      "Product": {
+        "type": "object",
+        "properties": {
+          "_id": {"type": "string"},
+          "productName": {"type": "string"},
+          "productPrice": {"type": "number"},
+          "productDesc": {"type": "string"},
+          "productAlt": {"type": "string"},
+          "productType": {"type": "string"},
+          "productImage": {"type": "string"}
+        }
+      }
+    },
+    "securitySchemes":{
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "query",
+        "name": "api_key"
+      }
+    }
+  }
+  
 
 }
