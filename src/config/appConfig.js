@@ -13,7 +13,11 @@ import { mongoDBConn } from './mongoDB.js'
 // Swagger for documentation
 import swaggerUi from 'swagger-ui-express';
 // documentation
-import swaggerDocs from '../../swagger.json'
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const swaggerDocs = require("../../swagger.json");
+
+// import swaggerDocs from '../../swagger.json';
 
 
 const app = express();
