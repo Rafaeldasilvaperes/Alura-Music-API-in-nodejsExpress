@@ -5,7 +5,7 @@ const SERVICE = ProductService.productService
 
 
 // GET
-export const getAllProducts = async (req, res) =>{
+export const getAllProducts = async (req, res) => {
   const {status, products, error} = await SERVICE.getAllProducts()
   
   return res.status(status).send(products ? products : error);

@@ -6,6 +6,7 @@ import { validateApiKey } from '../middlewares/keyValidator.js'
 
 export const router = express.Router();
 
+// ENDPOINT: v1/products - For products
 // GET
 router.get('/', validateApiKey, getAllProducts);
 // POST
@@ -16,3 +17,6 @@ router.get('/:id', validateApiKey, getSingleProduct);
 router.delete('/:id', validateApiKey, deleteProduct);
 // PATCH
 router.patch('/:id', validateApiKey, editProduct);
+
+// ENDPOINT: v1/auth/user - For User registration and Login
+
