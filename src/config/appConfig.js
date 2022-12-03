@@ -8,6 +8,7 @@ import corsConfig from '../middlewares/cors.js';
 import timeout from 'connect-timeout'
 // routes
 import { router as productsRoutes } from '../routes/products.js';
+import { router as userRoutes } from '../routes/users.js'
 // Mongo DB connection
 import { mongoDBConn } from './mongoDB.js'
 // Swagger for documentation
@@ -34,6 +35,6 @@ corsConfig(app);
 // Endpoints
 app.use('/v1/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use('/v1/products', productsRoutes);
-app.use('/v1/auth', userRoutes);
+app.use('/v1/auth/register', userRoutes);
 
 export default app; 
