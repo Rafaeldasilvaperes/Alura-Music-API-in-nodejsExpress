@@ -17,3 +17,10 @@ export const userLogin = async (req, res) => {
 
   return res.status(status).json( user ? user : error );
 }
+
+export const getUser = async (req, res) => {
+  const { id } = req.params;
+  const {status, error, user} = await SERVICE2.getUser(id);
+
+  return res.status(status).json( user ? user : error );
+}

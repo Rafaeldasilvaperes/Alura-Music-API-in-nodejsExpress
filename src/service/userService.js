@@ -12,7 +12,7 @@ import jwt from 'jsonwebtoken';
 const DATABASE2 = QueryDB2.MongoUser;
 
 const usersService = {
-  // User Register Route
+  // USER REGISTER ROUTE
   async userRegister (user) {
     
     if(checkingForEmptyInput(user)){
@@ -64,7 +64,7 @@ const usersService = {
     }
   },
 
-  // User Login Route
+  // USER LOGIN ROUTE
   async userLogin (user) {
 
     if(checkingForEmptyInput(user)){
@@ -135,6 +135,31 @@ const usersService = {
       });
     }
 
+  },
+
+  // GET ONE USER WITHOUT PASSWORD
+  async getUser (id) {
+    
+    try {
+      const user = await DATABASE2.getOneUserById(id);
+
+      return ({
+        status: 200,
+        user: {
+          message: "User found successfully!",
+          user: user
+        }
+      })
+    } catch (error) {
+      return ({
+        status: 404,
+        error: {
+          message: "Try a different user",
+          error: "User not found!"
+        }
+      })
+    }
+    
   }
 }
 

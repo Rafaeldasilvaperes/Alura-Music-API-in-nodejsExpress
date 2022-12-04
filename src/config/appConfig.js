@@ -35,4 +35,5 @@ app.use('/v1/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use('/v1/products', productsRoutes);
 app.use('/v1/auth/', userRoutes);
 
+
 export default app; 
