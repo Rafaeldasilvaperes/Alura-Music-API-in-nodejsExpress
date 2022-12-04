@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+mongoose.set('strictQuery', false);
 const Product = new mongoose.Schema({
   productName: {
     type: String,

@@ -2,6 +2,8 @@
 import { checkingForErrors } from '../helpers/checkingForErrors.js'
 // Data Access Object for DB queries, obs.: without an interface
 import { QueryDB } from '../DAO/productDAO.js'
+// Product Model
+import ProductModel from '../models/Product.js'
 
 const DATABASE = QueryDB.Mongo
 
@@ -46,9 +48,9 @@ const productService = {
   },
   // POST
   async postOneProduct(product) {
-    const productReady = {
+    const productReady = new ProductModel({
       ...product
-    }
+    })
 
     if (checkingForErrors(product)) {
       return ({

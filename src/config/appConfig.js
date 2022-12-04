@@ -18,8 +18,6 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const swaggerDocs = require("../../swagger.json");
 
-// import swaggerDocs from '../../swagger.json';
-
 
 const app = express();
 // Mongoose connection
@@ -35,6 +33,6 @@ corsConfig(app);
 // Endpoints
 app.use('/v1/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use('/v1/products', productsRoutes);
-app.use('/v1/auth/register', userRoutes);
+app.use('/v1/auth/', userRoutes);
 
 export default app; 
