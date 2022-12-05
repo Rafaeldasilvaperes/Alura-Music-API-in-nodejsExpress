@@ -3,7 +3,7 @@ import express from 'express';
 import { createProduct, getAllProducts, getSingleProduct, deleteProduct, editProduct } from '../controllers/productsController.js';
 // middleware for api_key validation
 import { validateApiKey } from '../middlewares/keyValidator.js';
-
+// Validates token received by the client
 import { tokenValidator } from '../middlewares/tokenValidator.js';
 
 export const router = express.Router();
@@ -20,5 +20,5 @@ router.delete('/:id', tokenValidator, validateApiKey, deleteProduct);
 // PATCH
 router.patch('/:id', tokenValidator, validateApiKey, editProduct);
 
-// ENDPOINT: v1/auth/user - For User registration and Login
+
 

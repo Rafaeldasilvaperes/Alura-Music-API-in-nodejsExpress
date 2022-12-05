@@ -23,12 +23,12 @@ const app = express();
 // Mongoose connection
 mongoDBConn();
 
-// middleware to give a limit time of waiting for a request to be answered
-app.use(timeout('30s'));
 // Middlewares
-// json 
+  // middleware to give a limit time of waiting for a request to be answered
+app.use(timeout('30s'));
+  // json 
 bodyParserConfig(app);
-// cors
+  // cors
 corsConfig(app);
 // Endpoints
 app.use('/v1/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
