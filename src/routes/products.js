@@ -5,7 +5,6 @@ import { createProduct, getAllProducts, getSingleProduct, deleteProduct, editPro
 import { validateApiKey } from '../middlewares/keyValidator.js';
 // Validates token received by the client
 import { tokenValidator } from '../middlewares/tokenValidator.js';
-import cors from 'cors';
 
 export const router = express.Router();
 
@@ -13,7 +12,6 @@ export const router = express.Router();
 // GET
 router.get('/', validateApiKey, getAllProducts);
 // POST
-router.options('/', cors())
 router.post('/', tokenValidator, validateApiKey, createProduct);
 // GET SINGLE PRODUCT
 router.get('/:id', validateApiKey, getSingleProduct);
