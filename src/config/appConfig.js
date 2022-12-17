@@ -30,7 +30,7 @@ app.use(timeout('30s'));
 bodyParserConfig(app);
   // cors
 corsConfig(app);
-app.use(cors())
+
 // Endpoints
 app.use('/v1/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use('/v1/products', productsRoutes);
