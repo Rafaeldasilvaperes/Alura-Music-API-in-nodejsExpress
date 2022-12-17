@@ -33,7 +33,7 @@ bodyParserConfig(app);
 app.use((req, res, next) =>{
   res.header('Access-Control-Allow-Origin', '*');
   res.header(
-    'Access-Control-Allow-Header', 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    'Access-Control-Allow-Header', 'access-control-allow-origin, Origin, X-Requested-With, Content-Type, Accept, Authorization'
   );
 
   if(req.method === 'OPTIONS'){
