@@ -3,7 +3,8 @@ import express from 'express';
 // bodyParser middleware
 import bodyParserConfig from '../middlewares/bodyParser.js';
 // cors
-import corsConfig from '../middlewares/cors.js';
+// import corsConfig from '../middlewares/cors.js';
+
 // Time limit for a requestion to await for an answer
 import timeout from 'connect-timeout'
 // routes
@@ -29,7 +30,19 @@ app.use(timeout('30s'));
   // json 
 bodyParserConfig(app);
   // cors
-corsConfig(app);
+app.use((req, res, next) =>{
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Header', 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  );
+
+  if(req.method === 'OPTIONS'){
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET')
+    return res.status(200).send({})
+  }
+  next();
+})
+// corsConfig(app);
 
 // Endpoints
 app.use('/v1/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
