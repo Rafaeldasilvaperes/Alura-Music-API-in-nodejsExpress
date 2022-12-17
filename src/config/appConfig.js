@@ -3,7 +3,7 @@ import express from 'express';
 // bodyParser middleware
 import bodyParserConfig from '../middlewares/bodyParser.js';
 // cors
-//import corsConfig from '../middlewares/cors.js';
+import corsConfig from '../middlewares/cors.js';
 // Time limit for a requestion to await for an answer
 import timeout from 'connect-timeout'
 // routes
@@ -15,7 +15,6 @@ import { mongoDBConn } from './mongoDB.js'
 import swaggerUi from 'swagger-ui-express';
 // documentation
 import { createRequire } from "module";
-import cors from 'cors';
 const require = createRequire(import.meta.url);
 const swaggerDocs = require("../../swagger.json");
 
@@ -30,7 +29,7 @@ app.use(timeout('30s'));
   // json 
 bodyParserConfig(app);
   // cors
-//corsConfig(app);
+corsConfig(app);
 app.use(cors())
 // Endpoints
 app.use('/v1/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
